@@ -1,9 +1,9 @@
-import React, {Component}from "react";
-import {Link} from "react-router-dom";
-import userService from "../../utils/userService";
-import { useState } from "react";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import userService from '../../utils/userService';
+import { useState } from 'react';
 
-function SignUpForm () {
+function SignUpForm() {
 
     const [state, setState] = useState({
         username: "",
@@ -34,7 +34,7 @@ function SignUpForm () {
     isFormValid = () => {
         state.email && state.password && state.password === state.password_confrimation;
     }
-    
+
 
      
 
@@ -76,3 +76,5 @@ function SignUpForm () {
 
     );
 }
+
+export default SignUpForm;

@@ -16,11 +16,13 @@ function App() {
   }, []) 
 
   return (
-    <div className="App">
+    <div className='App'>
       <header className="App-header">
         <h1>Welcome to Hacked!</h1>
       </header>
+      <div id='App'></div>
     </div>
+
   );
 }
 
