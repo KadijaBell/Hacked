@@ -2,51 +2,62 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import userService from '../../utils/userService';
 import { useState } from 'react';
+import axios from 'axios';
 
-function SignUpForm() {
-
+function SignUpForm({props}) {
+//need a handlelogin/signup function(mastermind)
     const [state, setState] = useState({
-        username: "",
-        email: "",
-        password: "",
-        password_confrimation: "",
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     },
     );
 
-     handleChange = (e) => {
+
+    const handleChange = (e) => {
         setState({
             ...state,
-            [e.target.name]: e.target.value
+            [e.target.username]: e.target.value
         });
-    },
-
-    handleSubmit = async (e) => {
+    }
+    
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     try {
+    //         userService.signup(state);
+    //         props.handleSignUporLogin();
+    //     } catch (err) {
+    //         alert("Invalid Credentials");
+    //     }
+    //}
+   const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await userService.signup(state);
-            props.handleSignUpOrLogin();
-            props.history.push("/");
+            props.handleSignUporLogin();
         } catch (err) {
-            alert("Signup Failed - Please try again");
+            console.log(err)
+            alert("Invalid Credentials");
         }
     }
 
-    isFormValid = () => {
-        state.email && state.password && state.password === state.password_confrimation;
-    }
 
+    const isFormInvalid = () => {
+        return !(state.username && state.email && state.password === state.password_confirmation);
+    }
 
      
 
     return (
-        <div>
+        <div className="SignUpForm">
             <header className="header-footer">Sign Up</header>
-            <form className="form-horizontal" onSubmit={handleSubmit}>
+            <form className="form-horizontal" onSubmit={handleSubmit} >
                 <div className="form-group">
                     <div className="col-sm-12">
                         <input type="text" className="form-control" placeholder="Username" value={state.username} name="username" onChange={handleChange} />
                     </div>
-                </div>  
+                </div>
                 <div className="form-group">
                     <div className="col-sm-12">
                         <input type="email" className="form-control" placeholder="Email" value={state.email} name="email" onChange={handleChange} />
@@ -59,19 +70,18 @@ function SignUpForm() {
                 </div>
                 <div className="form-group">
                     <div className="col-sm-12">
-                        <input type="password" className="form-control" placeholder="Confirm Password" value={state.password_confrimation} name="password_confrimation" onChange={handleChange} />
+                        <input type="password" className="form-control" placeholder="Confirm Password" value={state.password_confirmation} name="password_confirmation" onChange={handleChange} />
                     </div>
                 </div>
                 <div className="form-group">
                     <div className="col-sm-12 text-center">
-                        <button className="btn btn-default" disabled={!isFormValid()}>Sign Up</button>&nbsp;&nbsp;
-                        <Link to="/">Cancel</Link>
+
+                        <button className="btn btn-default" disabled={isFormInvalid()}>Sign Up</button>&nbsp;&nbsp;&nbsp;
+                        <Link to='/'>Cancel</Link>
                     </div>
                 </div>
             </form>
         </div>
-
-                
 
 
     );
