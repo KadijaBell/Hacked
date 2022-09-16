@@ -3,17 +3,17 @@ import { useParams, useNavigate } from 'react';
 import {axios} from 'axios';
 
 
-const PostEdit = () => {
+const PostEdit = ({setPost}) => {
     let { id } = useParams();
     let navigate = useNavigate();
 
     const postState = {
-        user: '',
-        image_upload: '',
+        username: '',
+        title: '',
         image_link: '',
-        video_upload: '',
         video_link: '',
         description: '',
+
     };
 
     const [formData, setFormData] = useState(postState);
@@ -39,7 +39,9 @@ const PostEdit = () => {
         event.preventDefault();
         axios.put(`http://localhost:8000/api/posts/${id}`, formData)
             .then((res) => {
-                navigate(`/posts/${id}`);
+                setFormData(postState);
+                setPost(res.data);
+                navigate(`/posts/${id}`, { replace: true });
             })
             .catch((err) => {
                 console.log(err);
@@ -48,15 +50,14 @@ const PostEdit = () => {
 
     return (
      <form onSubmit={handleSubmit}>  
-        <p>{username}</p>
+        <h1> Edit Post {formData.username} </h1>
 
         <input type="text" name="username" value={formData.username} onChange={handleChange} />
-        <input type="text" name="image_upload" value={formData.image_upload} onChange={handleChange} />
-        <input type="text" name="image_link" value={formData.image_link} onChange={handleChange} />
-        <input type="text" name="video_upload" value={formData.video_upload} onChange={handleChange} />
-        <input type="text" name="video_link" value={formData.video_link} onChange={handleChange} />
+        <input type="text" name="title" value={formData.title} onChange={handleChange} />
+        <input type="link" name="image_link" value={formData.image_link} onChange={handleChange} />
+        <input type="link" name="video_link" value={formData.video_link} onChange={handleChange} />
         <input htmlFor="description" name="description" value={formData.description} onChange={handleChange} />
-       <input type= 'Submit' value='Edit'/>
+       <button type= 'Submit' value='Edit'>Changed my mind again</button>
     </form>
     )
 }

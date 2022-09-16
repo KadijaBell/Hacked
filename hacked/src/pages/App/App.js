@@ -7,47 +7,58 @@ import SignUpPage from '../SignUpPage/SignUpPage';
 import LoginPage from '../LoginPage/LoginPage';
 import Home from '../Home/Home';
 import userService from '../../utils/userService';
-import tokenService from '../../utils/tokenService';
 import PostCreate from '../Post/PostCreate';
 import PostList from '../Post/PostList';
+import PostEdit from '../Post/PostEdit';
+
 
 function App() {
 
   const [posts, setPosts] = useState([]);
-  const [state, setState] = useState([]);
+  const [user, setUser] = useState([]);
 
     useEffect(() => {
-    console.log('useEffect Ran!')
     fetch('http://localhost:8000/posts/')
-    .then(res => {
-      
+    // .then(res => res.json())
+    // .then(data => setPosts(data))
+    .then(res => { 
       return res.json()
     })
     .then(res => {
       setPosts(res)
-      console.log(res)
     })
     }, []) 
 
-  const handleSignUporLogin = () => {
-    setState({user: userService.getUser()})
+    const handleSignUporLogin = () => {
+    
+    setUser(userService.getUser())
   }
 
+  const handleLogout = () => {
+    userService.logout();
+    setUser(null);
+  }
 
   return (
     <div className='App'>
+      {/* user={user} setUser={setUser} handleLogout={handleLogout} */}
     <Router>
       
       
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Routes>
+      
+
+        
         <Route path='' element={<Home />} />
         <Route path='/login' element={<LoginPage handleSignUporLogin={handleSignUporLogin} />} />
         <Route path='/signup'  element={<SignUpPage handleSignUporLogin={handleSignUporLogin}/>} />
         
-        <Route path='/home' element={<Home />} />
-        <Route path='/post' element={<PostCreate />} />
+        <Route path='/post/create' element={<PostCreate />} />
         <Route path='/posts' element={<PostList posts={posts}/>} />
+        <Route path='/post/edit/:id' element={<PostEdit/>} />
+        
+      
       </Routes>
     </Router>
     </div>

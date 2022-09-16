@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import userService from '../../utils/userService';
 import {useState} from 'react';
@@ -18,22 +18,24 @@ function LoginPage(props) {
             [e.target.name]: e.target.value
         });
     }
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await userService.login(state);
             props.handleSignUporLogin();
+            navigate('/posts');
         } catch (err) {
             console.log(err)
             alert("Invalid Credentials");
         }
+       
     }
 
     return (  
-        <div className="LoginPage">
+        <div className="LoginPage" onSubmit={handleSubmit}>
             <header className="header-footer">Log In</header>
-            <form className="form-horizontal" onSubmit={handleSubmit}>
+            <form className="form-horizontal" >
                 <div className="form-group">
                     <div className="col-sm-12">
                         <input type="text" className="form-control" placeholder="Username" value={props.username} name="username" onChange={handleChange} />
@@ -47,7 +49,8 @@ function LoginPage(props) {
                 <div className="form-group">
                     <div className="col-sm-12 text-center">
                         <button className="btn btn-default">Log In</button>&nbsp;&nbsp;&nbsp;
-                        <Link to='/post'>Cancel</Link>
+                        
+                        <Link to=''>Cancel</Link>
                     </div>
                 </div>
             </form>
