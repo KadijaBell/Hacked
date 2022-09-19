@@ -12,12 +12,16 @@ Welcome to hacked, a place to track all your DIY & life hack needs!
 Backend
 
 -Django Rest Framework 
+
 -JWT Authentication
+
 -Styling method(CSS & BootStrap)
 
 Frontend
 -React
+
 -JWT Authentication 
+
 -Styling method(CSS & BootStrap)
 
 
