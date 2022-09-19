@@ -1,5 +1,5 @@
-.button {
-    display: inline-block;
+.button{
+    /* display: inline-block; */
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -7,4 +7,19 @@
     background-color: #7aa8b7;
     border-radius: 6px;
     outline: none;
+    align-items: center;
+  }
+
+  body{
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-size: contain;
+    background-size: 100%; */
+    /* background-size: 100vw 100vh; */
+    background-image: url("https://www.drjimtaylor.com/4.0/wp-content/uploads/2020/04/life-hacks.jpg;")
+  }
+
+  h2, a{
+    text-align: center;
+    color: white;
   }

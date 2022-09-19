@@ -24,13 +24,15 @@ function LoginPage(props) {
         try {
             await userService.login(state);
             props.handleSignUporLogin();
-            navigate('/posts');
+            navigate('/list');
         } catch (err) {
             console.log(err)
             alert("Invalid Credentials");
         }
        
     }
+
+    
 
     return (  
         <div className="LoginPage" onSubmit={handleSubmit}>

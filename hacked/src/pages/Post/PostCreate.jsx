@@ -1,29 +1,27 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState  } from 'react'
+import { useNavigate, } from 'react-router-dom';
+import {axios} from 'axios';
 
 
 
-
-
-const PostCreate = ({addPost}) => {
+const PostCreate = () => {
   const postState = {
-    username: '',
+  
     title: '',
     image_link: '',
-    video_link: '',
     description: '',
   }
+
+
   const [formData, setFormData] = useState(postState);
   const navigate = useNavigate();
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:8000/posts', formData)
+    axios.post('http://localhost:8000/list/', formData)
     .then(res => {
       setFormData(postState);
-      addPost(res.data);
-      navigate('/posts', {replace: true})
+      navigate('', {replace: true})
     })
     .catch(err => console.log(err))
   }
@@ -34,17 +32,34 @@ const PostCreate = ({addPost}) => {
       [event.target.name]: event.target.value,
     })
   }
+ 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
+  
+    <form >
       <h1>Create Post</h1>
-      <input type="text" name="username" value={formData.username} onChange={handleChange} />
-      <input type="text" name="title" value={formData.title} onChange={handleChange} />
-      <input type="link" name="image_link" value={formData.image_link} onChange={handleChange} />
-      <input type="link" name="video_link" value={formData.video_link} onChange={handleChange} />
-      <input htmlFor="description" name="description" value={formData.description} onChange={handleChange} />
-      <button type="submit" value="Create">Hack It!</button>
+      <div>
+      
+     
+      </div>
+
+      <div>
+      <input type="text" name="title" placeholder="title" value={formData.title} onChange={handleChange} />
+      </div>
+
+      <div>
+      <input type="link" name="image_link" placeholder="image link"value={formData.image_link} onChange={handleChange} />
+      </div>
+
+      <div>
+      <input type="description" name="description" placeholder="description" value={formData.description} onChange={handleChange} />
+      </div>
+      <button type="submit" value="Create" onClick={handleSubmit}>Hack It!</button>
     </form>
+
+    
+    </>
   )
   }
 

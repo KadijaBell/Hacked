@@ -1,27 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {axios} from 'axios';
+import styled from 'styled-components';
 
 
-const PostEdit = ({setPost}) => {
-    let { id } = useParams();
-    let navigate = useNavigate();
+const PostEdits = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+background: #e2e8d5;
+padding: 3%;
+margin: 0 2%;
+width: 100%;
+height: 100vh;
+h1 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+}
+input {
+    width: 100%;
+    height: 50px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+button {
+    width: 100%;
+    height: 50px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    background: #2b6cb0;
+    color: #fff;
+    cursor: pointer;
+}
+`
+const PostEdit = ({setPost, posts}) => {
+let { id } = useParams();
+let navigate = useNavigate();
 
     const postState = {
-        username: '',
+       
         title: '',
         image_link: '',
-        video_link: '',
         description: '',
 
     };
 
-    const [formData, setFormData] = useState(postState);
+    const [post, setPosts] = useState(postState);
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/posts/${id}`)
+       fetch(`http://localhost:8000/list/${id}`)
             .then((res) => {
-                setFormData(res.data);
+                setPosts(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -29,36 +66,45 @@ const PostEdit = ({setPost}) => {
     }, []);
 
     const handleChange = (event) => {
-        setFormData({
-            ...formData,
+        setPosts({
+            ...post,
             [event.target.name]: event.target.value,
         });
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.put(`http://localhost:8000/api/posts/${id}`, formData)
+        axios.put(`http://localhost:8000/list/${id}`, post)
             .then((res) => {
-                setFormData(postState);
+                setPosts(postState);
                 setPost(res.data);
-                navigate(`/posts/${id}`, { replace: true });
+                navigate(`/list/${id}`, { replace: true });
             })
             .catch((err) => {
                 console.log(err);
             });
     }
 
-    return (
-     <form onSubmit={handleSubmit}>  
-        <h1> Edit Post {formData.username} </h1>
+    let deleteIt = (id) => {
+        axios.delete(`http://localhost:8000/delete/${id}/`)
+        navigate('/list', {replace:true})
+      
+      }
 
-        <input type="text" name="username" value={formData.username} onChange={handleChange} />
-        <input type="text" name="title" value={formData.title} onChange={handleChange} />
-        <input type="link" name="image_link" value={formData.image_link} onChange={handleChange} />
-        <input type="link" name="video_link" value={formData.video_link} onChange={handleChange} />
-        <input htmlFor="description" name="description" value={formData.description} onChange={handleChange} />
-       <button type= 'Submit' value='Edit'>Changed my mind again</button>
-    </form>
+    return (
+        <PostEdits>
+
+        <form onSubmit={handleSubmit}>  
+            <h1> Edit Post </h1>
+        
+           
+            <input type="text" name="title" value={posts.title} placeholder="title" onChange={handleChange} />
+            <input type="link" name="image_link" value={posts.image_link}placeholder="image link "onChange={handleChange} />
+            <input type="description" name="description" value={posts.description} placeholder="description" onChange={handleChange} />
+           <button type= 'Submit' value='Edit'>Changed my mind again</button>
+           <button className='destroy' onClick={deleteIt}>Delete</button>
+        </form>
+        </PostEdits> 
     )
 }
 

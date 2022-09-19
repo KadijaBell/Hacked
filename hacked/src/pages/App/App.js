@@ -1,7 +1,8 @@
 import './App.css';
 import {useState, useEffect} from 'react';
-import {Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-
+import {Routes, Route } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+  
 
 import SignUpPage from '../SignUpPage/SignUpPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -10,17 +11,16 @@ import userService from '../../utils/userService';
 import PostCreate from '../Post/PostCreate';
 import PostList from '../Post/PostList';
 import PostEdit from '../Post/PostEdit';
+import Layout from '../../components/Layout';
 
 
 function App() {
-
+ 
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState([]);
 
     useEffect(() => {
-    fetch('http://localhost:8000/posts/')
-    // .then(res => res.json())
-    // .then(data => setPosts(data))
+    fetch('http://localhost:8000/list/')
     .then(res => { 
       return res.json()
     })
@@ -34,34 +34,18 @@ function App() {
     setUser(userService.getUser())
   }
 
-  const handleLogout = () => {
-    userService.logout();
-    setUser(null);
-  }
-
   return (
-    <div className='App'>
-      {/* user={user} setUser={setUser} handleLogout={handleLogout} */}
-    <Router>
-      
-      
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <Routes>
-      
-
-        
+   <Layout>
+      <Routes>        
         <Route path='' element={<Home />} />
         <Route path='/login' element={<LoginPage handleSignUporLogin={handleSignUporLogin} />} />
         <Route path='/signup'  element={<SignUpPage handleSignUporLogin={handleSignUporLogin}/>} />
-        
-        <Route path='/post/create' element={<PostCreate />} />
-        <Route path='/posts' element={<PostList posts={posts}/>} />
-        <Route path='/post/edit/:id' element={<PostEdit/>} />
-        
-      
+        <Route path='/create' element={<PostCreate />} />
+        <Route path='/list' element={<PostList posts={posts} />} />
+      <Route path='/post/edit/:id' element={<PostEdit setPosts={setPosts} posts={posts} />} />
+         
       </Routes>
-    </Router>
-    </div>
+   </Layout>
   );
 }
   

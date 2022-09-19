@@ -1,57 +1,58 @@
 import React, {useEffect, useState} from 'react';
-import NavBar from '../../components/NavBar';
-import styled from 'styled-components';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import PostCreate from './PostCreate';
+import styled from 'styled-components';
 import axios from 'axios';
+import PostEdit from './PostEdit';
+
 
 const PostContainer = styled.div`
-  background-color: #eb0c0c;
-  width: 50vw;
 
-  img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    width: 25px;
-  }
+  div {
     
-    `
-    
+    background: #e2e8d5;
+    display: flex;
+    flex-direction: column;
+    padding: 3%;
+    margin: 0 2%;
+ 
+    }
+
+    img {
+      width: 100%;
+      height: 210px;
+    }
+
+    button{
+      color: black;    }
+`
+
+  const PostCard =styled.div`
+   
+    min-width: 100vw;
+    display:  flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  `
 
 const PostList = ({posts}) => {
-let navigate = useNavigate();
- const deletePost = (id) => {
-    axios.delete(`http://localhost:8000/post/${id}`)
-    .then(res => {
-        console.log(res)
-        navigate('/posts')
-    })
-    .catch(err => console.log(err))
-}
-let {id} = useParams();
-const [post, setPost] = useState({})
-useEffect(() => {
-  fetch(`http://localhost:8000/posts/${id}`)
-  .then(res => res.json())
-  .then(data => setPost(data))
-  .catch(err => console.log(err))
-}, [id])
 
-console.log(posts)
-//ASK HOW TO RETURN USERNAME
-    // const addPost = (post) => {
-    //   setPosts([...posts, post]);
-    // };
+
+
+
 const postList = posts.map(post => (
-  <div key={post.name}> 
+  <div className='container' key={post?.name} > 
 
   {
     post && (<>
-    <h1>{post.username}</h1>
-    <img src={post.image_link} alt='' />
-    <img src={post.video_link} alt=''/>
-    <img src={post.title} alt=''/>
-    <p>{post.description}</p>
-    <button id='edit'><Link>{`/post/edit/${post._id}`}</Link>Opps I change my mind</button>
-    <button id='delete' onClick={() => deletePost(post._id)}> Destroy the cosmos</button>
+    <h1>{post?.username}</h1>
+    <img src={post?.image_link} alt='' />
+    <p>{post?.title}</p>
+    <p>{post?.description}</p>
 
     </>)
   }
@@ -63,12 +64,24 @@ const postList = posts.map(post => (
 
 
   return (
-    <>
+    <div className='main'>
+      <PostCreate />
 
-    <PostContainer>
-    {postList}
-  </PostContainer>
-  </>
+        <PostCard>
+      <PostContainer>
+          {postList}
+      </PostContainer>
+        </PostCard>
+
+        <PostEdit/>
+        
+
+    </div>
+
+  
+  
+
+  
   )
 }
 

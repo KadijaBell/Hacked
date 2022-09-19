@@ -34,7 +34,7 @@ function SignUpPage(props) {
             try {
                 await userService.signup(state);
                 props.handleSignUporLogin();
-                navigate('/posts')
+                navigate('/list')
             } catch (err) {
                 console.log(err)
                 alert("Invalid Credentials");

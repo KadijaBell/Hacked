@@ -1,13 +1,15 @@
 import React from 'react'
 import '../../pages/Home/Home.css'
-// import NavBar from '../../components/NavBar'
+
 
 
 const Home = () => {
   
   return (
+    <body>
+
     <div>
-     {/* <NavBar /> */}
+
 
       <h2>Welcome to Hacking It</h2>
     
@@ -20,6 +22,7 @@ const Home = () => {
 
       
     </div>
+    </body>
   )
 }
 

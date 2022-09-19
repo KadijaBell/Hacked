@@ -1,7 +1,11 @@
 .LoginPage {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
+ 
+  background-color:#24a0db ;
+  background: fixed;
+  text-align: center; 
+  display: flex;
+  flex-flow: column nowrap; 
+   justify-content: center;
+  margin-bottom: 50px;
+  align-items: center;
   }
