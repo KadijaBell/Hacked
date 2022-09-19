@@ -15,12 +15,16 @@ import Layout from '../../components/Layout';
 
 
 function App() {
- 
+ const HACKED_BACKEND_= `${process.env.HACKED_BACKEND_}`;
+
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState([]);
 
     useEffect(() => {
-    fetch('http://localhost:8000/list/')
+    fetch(HACKED_BACKEND_)
+      .then(res => res.json())
+      .then(data => setPosts(data))
+      .catch(err => console.log(err))
     .then(res => { 
       return res.json()
     })

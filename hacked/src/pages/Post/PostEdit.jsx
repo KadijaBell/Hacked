@@ -45,6 +45,7 @@ const PostEdit = ({setPost, posts}) => {
 let { id } = useParams();
 let navigate = useNavigate();
 
+
     const postState = {
        
         title: '',
@@ -56,7 +57,7 @@ let navigate = useNavigate();
     const [post, setPosts] = useState(postState);
 
     useEffect(() => {
-       fetch(`http://localhost:8000/list/${id}`)
+       fetch(`${HACKED_BACKEND_}/list/${id}/`)
             .then((res) => {
                 setPosts(res.data);
             })
@@ -74,7 +75,7 @@ let navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.put(`http://localhost:8000/list/${id}`, post)
+        axios.put(`${HACKED_BACKEND_}/list/${id}/`, post)
             .then((res) => {
                 setPosts(postState);
                 setPost(res.data);
@@ -86,7 +87,7 @@ let navigate = useNavigate();
     }
 
     let deleteIt = (id) => {
-        axios.delete(`http://localhost:8000/delete/${id}/`)
+        axios.delete(`${HACKED_BACKEND_}/delete/${id}/`)
         navigate('/list', {replace:true})
       
       }

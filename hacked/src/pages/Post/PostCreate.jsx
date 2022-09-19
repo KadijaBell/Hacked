@@ -5,6 +5,7 @@ import {axios} from 'axios';
 
 
 const PostCreate = () => {
+  const HACKED_BACKEND_= `${process.env.HACKED_BACKEND_}`;
   const postState = {
   
     title: '',
@@ -18,7 +19,7 @@ const PostCreate = () => {
 
   let handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:8000/list/', formData)
+    axios.post(`${HACKED_BACKEND_}list/`, formData)
     .then(res => {
       setFormData(postState);
       navigate('', {replace: true})
