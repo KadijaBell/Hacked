@@ -21,17 +21,18 @@ function App() {
   const [user, setUser] = useState([]);
 
     useEffect(() => {
-    fetch(HACKED_BACKEND_)
-      .then(res => res.json())
-      .then(data => setPosts(data))
-      .catch(err => console.log(err))
-    .then(res => { 
-      return res.json()
-    })
-    .then(res => {
-      setPosts(res)
-    })
-    }, []) 
+      fetch(HACKED_BACKEND_)
+      // .then(res => res.json())
+      // .then(data => setPosts(data))
+      // .catch(err => console.log(err))
+    // .then(res => { 
+    //   return res.json()
+    // })
+    // .then(res => {
+    //   setPosts(res)
+    // })
+     }, []) 
+    
 
     const handleSignUporLogin = () => {
     
@@ -45,8 +46,8 @@ function App() {
         <Route path='/login' element={<LoginPage handleSignUporLogin={handleSignUporLogin} />} />
         <Route path='/signup'  element={<SignUpPage handleSignUporLogin={handleSignUporLogin}/>} />
         <Route path='/create' element={<PostCreate />} />
-        <Route path='/list' element={<PostList posts={posts} />} />
-      <Route path='/post/edit/:id' element={<PostEdit setPosts={setPosts} posts={posts} />} />
+        <Route path='/posts' element={<PostList posts={posts} />} />
+      <Route path='/post/:id' element={<PostEdit setPosts={setPosts} posts={posts} />} />
          
       </Routes>
    </Layout>

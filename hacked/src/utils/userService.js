@@ -1,7 +1,7 @@
 import tokenService from './tokenService';
 
 
-const BASE_URL = 'http://localhost:8000/api/';
+const BASE_URL = 'https://git.heroku.com/lifehacked.git/api/';
 
 
   async function signup(user) {
